@@ -43,12 +43,10 @@ public class ResServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		PrintWriter out = response.getWriter();
 		HttpSession s = request.getSession(true);
 		
 		if(request.getParameter("confirm")==null) {
 			ArrayList <String> books = new ArrayList<String>();
-	
 			books.add("Harry Potter");
 			books.add("Lord of the rings");
 			books.add("Hamlet");
@@ -64,7 +62,9 @@ public class ResServlet extends HttpServlet {
 				dispatcher.include(request, response);
 			}
 			else {
-				out.println("This book doesn't exist");
+				request.setAttribute("noBook", ' ');
+				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
+				dispatcher.include(request, response);
 			}
 		}
 		

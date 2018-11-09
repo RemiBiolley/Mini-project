@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<% HttpSession s = request.getSession(true);
+	 	if(s.getAttribute("login")==null){
+		response.sendRedirect( request.getContextPath() + "/index.jsp");	
+	}
+	%>
+	
 	<h1>Your reservation is complete !</h1>
 	<form method="post" action="/Mini-project/AuthServlet">
 		<input type="hidden" name="hidden" value="done">
