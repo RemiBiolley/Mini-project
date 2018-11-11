@@ -43,18 +43,14 @@ public class AuthServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-		PrintWriter out = response.getWriter();
 		
 		if(request.getParameter("hidden")==null) {
 			HttpSession s = request.getSession(true);
 			
 			Authentication auth = new Authentication();
-			auth.setId(request.getParameter("login"));
-			auth.setPassword(request.getParameter("mdp"));
-			request.setAttribute("bean", auth);
 			
-			if(Objects.equals(auth.getId(), "login") && Objects.equals(auth.getPassword(), "mdp")) {
-				s.setAttribute("login", auth.getId());
+			if(auth.checkUser(request.getParameter("login"), request.getParameter("mdp"))) {
+				s.setAttribute("login", request.getParameter("login"));
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
 				dispatcher.include(request, response);
 			}

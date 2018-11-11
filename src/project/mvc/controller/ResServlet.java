@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import project.mvc.model.Books;
 import project.mvc.model.Reservation;
 
 /**
@@ -46,7 +47,8 @@ public class ResServlet extends HttpServlet {
 		HttpSession s = request.getSession(true);
 		
 		if(request.getParameter("confirm")==null) {
-			ArrayList <String> books = new ArrayList<String>();
+			
+			/*ArrayList <String> books = new ArrayList<String>(); 
 			books.add("Harry Potter");
 			books.add("Lord of the rings");
 			books.add("Hamlet");
@@ -54,6 +56,21 @@ public class ResServlet extends HttpServlet {
 			books.add("I, Robot");
 			
 			if(books.contains(request.getParameter("book"))) {
+				Reservation res = new Reservation();
+				res.setBookName(request.getParameter("book"));
+				request.setAttribute("books", res);
+				s.setAttribute("book", res);
+				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/books.jsp");
+				dispatcher.include(request, response);
+			}
+			else {
+				request.setAttribute("noBook", ' ');
+				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
+				dispatcher.include(request, response);
+			}*/
+			
+			Books books = new Books();
+			if(books.bookInList(request.getParameter("book"))) {
 				Reservation res = new Reservation();
 				res.setBookName(request.getParameter("book"));
 				request.setAttribute("books", res);
@@ -74,8 +91,19 @@ public class ResServlet extends HttpServlet {
 				dispatcher.include(request, response);
 			}
 			else {
+				Books books = new Books();
+				
 				Reservation bookReservation = (Reservation)s.getAttribute("book");
-				bookReservation.setUserLogin((String)s.getAttribute("login"));
+				if(books.checkOwner(bookReservation)) {
+					request.setAttribute("confResult", "failed");
+					System.out.println("Je suis là");
+				}
+				else {
+					books.changeOwner((String)s.getAttribute("login"), bookReservation);
+					request.setAttribute("confResult", "success");
+					System.out.println("Je suis ici");
+				}
+				//bookReservation.setUserLogin((String)s.getAttribute("login"));
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/confirmation.jsp");
 				dispatcher.include(request, response);
 			}
