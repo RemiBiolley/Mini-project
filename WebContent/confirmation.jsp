@@ -8,14 +8,19 @@
 </head>
 <body>
 	<%@ page import = "java.util.Objects" %>
+	
+	<!-- redirect to the index if you didn't login first -->
 	<% HttpSession s = request.getSession(true);
 	 	if(s.getAttribute("login")==null){
 		response.sendRedirect( request.getContextPath() + "/index.jsp");	
 	}
 	%>
 	
+	<!--  Displays a message if the book is been successfully reserved -->
 	<% if(Objects.equals(request.getAttribute("confResult"), "success")) {%>
 	<h1>Your reservation is complete !</h1>
+	
+	<!-- else, displays another message -->
 	<% } else { %>
 	<h1>It seems that this book has already been reserved ... You should try to come back later.</h1>
 	<% } %>

@@ -46,30 +46,14 @@ public class ResServlet extends HttpServlet {
 		doGet(request, response);
 		HttpSession s = request.getSession(true);
 		
+		/////////////////////////////////////////////////
+		// Code executed after you searched for a book //
+		/////////////////////////////////////////////////
 		if(request.getParameter("confirm")==null) {
 			
-			/*ArrayList <String> books = new ArrayList<String>(); 
-			books.add("Harry Potter");
-			books.add("Lord of the rings");
-			books.add("Hamlet");
-			books.add("Christine");
-			books.add("I, Robot");
-			
-			if(books.contains(request.getParameter("book"))) {
-				Reservation res = new Reservation();
-				res.setBookName(request.getParameter("book"));
-				request.setAttribute("books", res);
-				s.setAttribute("book", res);
-				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/books.jsp");
-				dispatcher.include(request, response);
-			}
-			else {
-				request.setAttribute("noBook", ' ');
-				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
-				dispatcher.include(request, response);
-			}*/
-			
 			Books books = new Books();
+			
+			// Checks if the book is in the db and gets you to the books.jsp if it is
 			if(books.bookInList(request.getParameter("book"))) {
 				Reservation res = new Reservation();
 				res.setBookName(request.getParameter("book"));
@@ -78,6 +62,8 @@ public class ResServlet extends HttpServlet {
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/books.jsp");
 				dispatcher.include(request, response);
 			}
+			
+			// Else, gets you back to the welcome.jsp
 			else {
 				request.setAttribute("noBook", ' ');
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
@@ -85,25 +71,34 @@ public class ResServlet extends HttpServlet {
 			}
 		}
 		
+		///////////////////////////////////////////////////////
+		// Code executed after you decided to reserve a book //
+		///////////////////////////////////////////////////////
 		else {
+			
+			// Checks if you already logged in
 			if(s.getAttribute("login")==null) {
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/index.jsp");
 				dispatcher.include(request, response);
 			}
+			
 			else {
 				Books books = new Books();
 				
 				Reservation bookReservation = (Reservation)s.getAttribute("book");
+				
+				// Checks if the book is already reserved ...
 				if(books.checkOwner(bookReservation)) {
 					request.setAttribute("confResult", "failed");
 					System.out.println("Je suis là");
 				}
+				
+				// or not
 				else {
 					books.changeOwner((String)s.getAttribute("login"), bookReservation);
 					request.setAttribute("confResult", "success");
 					System.out.println("Je suis ici");
 				}
-				//bookReservation.setUserLogin((String)s.getAttribute("login"));
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/confirmation.jsp");
 				dispatcher.include(request, response);
 			}

@@ -1,6 +1,10 @@
 package project.mvc.model;
 import java.io.Serializable;
 
+//////////
+// Bean //
+//////////
+
 public class Reservation {
 	private String bookName;
 	private String userLogin;

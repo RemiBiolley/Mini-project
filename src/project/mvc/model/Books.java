@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.util.Objects;
 
 public class Books {
+	
+	//////////////////////////////////////////////////////////
+	// Method called to check if a book is already reserved //
+	//////////////////////////////////////////////////////////
 	public boolean checkOwner(Reservation res){
 		boolean isOwned = false;
 		
@@ -48,6 +52,9 @@ public class Books {
 		return isOwned;
 	}
 	
+	///////////////////////////////////////////////////
+	// Method called to check if a book is in the db //
+	///////////////////////////////////////////////////
 	public boolean bookInList(String bookName){
 		boolean isPresent=false;
 		
@@ -86,6 +93,10 @@ public class Books {
 		return isPresent;
 	}
 	
+	
+	/////////////////////////////////////
+	// Method called to reserve a book //
+	/////////////////////////////////////
 	public void changeOwner(String newOwner, Reservation res){
 		boolean isOwned = false;
 		

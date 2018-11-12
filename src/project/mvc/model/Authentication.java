@@ -7,6 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Authentication {
+	
+	//////////////////////////////////////////////////
+	// Method to check if the user exists in the db //
+	//////////////////////////////////////////////////
 	public boolean checkUser(String login, String password){
 		boolean exists = false;
 		

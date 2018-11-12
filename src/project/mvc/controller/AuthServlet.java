@@ -44,11 +44,16 @@ public class AuthServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 		
+		
+		////////////////////////////////////////////////////////////////////
+		// Part of the code executed when the servlet is called to log in //
+		////////////////////////////////////////////////////////////////////
 		if(request.getParameter("hidden")==null) {
 			HttpSession s = request.getSession(true);
 			
 			Authentication auth = new Authentication();
 			
+			// checking if the couple "login-password" is present in the database and act in consequence
 			if(auth.checkUser(request.getParameter("login"), request.getParameter("mdp"))) {
 				s.setAttribute("login", request.getParameter("login"));
 				RequestDispatcher dispatcher=getServletContext().getRequestDispatcher("/welcome.jsp");
@@ -59,6 +64,10 @@ public class AuthServlet extends HttpServlet {
 				dispatcher.include(request, response);
 			}
 		}
+		
+		/////////////////////////////////////////////////////////////////////
+		// Part of the code executed when the servlet is called to log out //
+		/////////////////////////////////////////////////////////////////////
 		else {
 			HttpSession s = request.getSession(true);
 			s.invalidate();

@@ -7,11 +7,13 @@
 <title>Error !</title>
 </head>
 <body>
+	<!-- redirect to the index if you didn't login first -->
 	<% HttpSession s = request.getSession(true);
 	 	if(s.getAttribute("login")==null){
 		response.sendRedirect( request.getContextPath() + "/index.jsp");	
 	}
 	%>
+	
 	<h1>You're facing a log-in error ...</h1>
 	<p>You should check your logins and try again</p>
 	

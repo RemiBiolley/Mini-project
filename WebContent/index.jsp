@@ -9,9 +9,9 @@
 <body>
 	<h1>We need you to identify</h1>
 	<form method="post" action="/Mini-project/AuthServlet">
-		<label for="login">Your login : (type "login")</label>
+		<label for="login">Your login : (type "user01" for example)</label>
 		<input type="text" class="formul" name="login"><br>
-		<label for="mdp">Your password : (type "mdp")</label>
+		<label for="mdp">Your password : (type "user01" for example)</label>
 		<input type="text" class="formul" name="mdp"><br>
 		
 		<input type="submit" value="Log-in" id ="submit">

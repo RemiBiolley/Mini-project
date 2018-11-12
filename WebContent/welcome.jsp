@@ -7,15 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<!-- redirect to the index if you didn't login first -->
 	<% HttpSession s = request.getSession(true);
 	 	if(s.getAttribute("login")==null){
 		response.sendRedirect( request.getContextPath() + "/index.jsp");	
 	}
 	%>
 	
+	<!--  displays a message as you arrive on the page -->
 	<% if(request.getAttribute("noBook")==null){ %>
 	<h1>Welcome dear user, here you can search any book you want in our database("Christine"" for example ...)</h1>
+	
+	<!-- displays a message if you tried to find a book which isn't contained in the database -->
 	<% } else {%>
 	<h1>The book you are looking for isn't present in our library ...</h1>
 	<% } %>
